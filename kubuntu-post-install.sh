@@ -4,7 +4,8 @@
 URL_GOOGLE_CHROME="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 URL_DISCORD="https://discord.com/api/download?platform=linux&format=deb"
 URL_VSCODE="https://az764295.vo.msecnd.net/stable/5235c6bb189b60b01b1f49062f4ffa42384f8c91/code_1.74.0-1670260027_amd64.deb"
-URL_MYSQL_WORKBENCH_UBUNTU_2204="https://dev.mysql.com/downloads/file/?id=514053"
+URL_ZOOM="https://zoom.us/client/5.12.9.367/zoom_amd64.deb"
+URL_MYSQL_WORKBENCH_UBUNTU_2204="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-dbgsym_8.0.31-1ubuntu22.04_amd64.deb"
 URL_ZSHRC_FILE="https://raw.githubusercontent.com/juliana-ribeiro/linux-kubuntu-post-install/master/.zshrc"
 
 DIR_PACOTES_DEB="$HOME/Downloads/Deb"
@@ -37,8 +38,9 @@ sudo apt update -y
 mkdir "$DIR_PACOTES_DEB"
 wget -c "$URL_GOOGLE_CHROME"       -P "$DIR_PACOTES_DEB"
 wget -c "$URL_DISCORD"             -P "$DIR_PACOTES_DEB"
+wget -c "$URL_ZOOM"                -P "$DIR_PACOTES_DEB"
 wget -c "$URL_MYSQL_WORKBENCH_UBUNTU_2204" -P "$DIR_PACOTES_DEB"
-wget -c "$URL_ZSHRC_FILE"       -P "$DIR_DOWNLOADS"
+wget -c "$URL_ZSHRC_FILE"          -P "$DIR_DOWNLOADS"
 
 ## Instalando pacotes .deb baixados na sessão anterior ##
 sudo dpkg -i $DIR_PACOTES_DEB/*.deb
@@ -62,9 +64,7 @@ for nome_do_pacote in ${PACOTES_PARA_INSTALAR[@]}; do
 done
 
 ## Finalizando configuração Docker ##
-sudo groupadd docker # Cria um grupo chamado docker
-sudo usermod -aG docker $USER # Adiciona seu usuário a esse grupo
-newgrp docker # Ativa as alterações feitas
+sudo usermod -aG docker $USER # Adiciona user ao grupo docker
 sudo chmod +x /usr/local/bin/docker-compose # Instala o docker-compose
 
 ## Instalando pacotes Snap ##
@@ -89,4 +89,5 @@ sudo apt update && sudo apt dist-upgrade -y
 sudo apt autoclean
 sudo apt autoremove -y
 rm -rf $DIR_PACOTES_DEB
+newgrp docker # Ativa as alterações feitas no Docker
 # ---------------------------------------------------------------------- #
